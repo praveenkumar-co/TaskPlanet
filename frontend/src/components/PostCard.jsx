@@ -33,7 +33,7 @@ const PostCard = ({ post }) => {
     setLikes(updatedLikes);
 
     try {
-      const res = await fetch(`/api/v1/posts/like/${post._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts/like/${post._id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -57,7 +57,7 @@ const PostCard = ({ post }) => {
   const handleFollowClick = async () => {
     if (!user || isOwner) return;
     try {
-      const res = await fetch(`/api/v1/users/follow/${post.owner?._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/follow/${post.owner?._id}`, {
         method: 'POST',
       });
       const data = await res.json();
@@ -91,7 +91,7 @@ const PostCard = ({ post }) => {
     setComments([...comments, tempComment]);
 
     try {
-      const res = await fetch(`/api/v1/posts/comment/${post._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts/comment/${post._id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: text })

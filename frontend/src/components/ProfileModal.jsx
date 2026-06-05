@@ -15,7 +15,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
         setLoading(true);
         try {
           // Fetch posts created by this specific user via ownerId parameter
-          const res = await fetch(`/api/v1/posts?ownerId=${user._id}&limit=100`);
+          const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts?ownerId=${user._id}&limit=100`);
           const data = await res.json();
           if (res.ok && data.success) {
             setUserPosts(data.data.posts);
@@ -32,7 +32,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
 
   const handleFollowToggle = async (targetUserId) => {
     try {
-      const res = await fetch(`/api/v1/users/follow/${targetUserId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/follow/${targetUserId}`, {
         method: 'POST',
       });
       const data = await res.json();

@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   const fetchCurrentUser = async (showLoadingScreen = false) => {
     try {
       if (showLoadingScreen) setLoading(true);
-      const res = await fetch('/api/v1/users/current-user', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/current-user`, {
         headers: { 'Content-Type': 'application/json' }
       });
       const data = await res.json();
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (formData) => {
     setError(null);
     try {
-      const res = await fetch('/api/v1/users/register', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/register`, {
         method: 'POST',
         body: formData // Form data handles content-type boundary
       });
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (emailOrUsername, password) => {
     setError(null);
     try {
-      const res = await fetch('/api/v1/users/login', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ emailOrUsername, password })
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
   const googleLogin = async (credential) => {
     setError(null);
     try {
-      const res = await fetch('/api/v1/users/google-login', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/google-login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ credential })
@@ -120,7 +120,7 @@ export const AuthProvider = ({ children }) => {
   // Logout user
   const logout = async () => {
     try {
-      await fetch('/api/v1/users/logout', {
+      await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/logout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });

@@ -67,7 +67,7 @@ const Signup = ({ onToggleView }) => {
     try {
       await register(formData);
       // Automatically log in after registration
-      const loginRes = await fetch('/api/v1/users/login', {
+      const loginRes = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ emailOrUsername: email, password })

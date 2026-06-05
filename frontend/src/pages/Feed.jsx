@@ -32,7 +32,7 @@ const Feed = ({ searchValue }) => {
         search: searchValue
       });
 
-      const res = await fetch(`/api/v1/posts?${queryParams}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts?${queryParams}`, {
         headers: { 'Content-Type': 'application/json' }
       });
       const data = await res.json();
@@ -63,7 +63,7 @@ const Feed = ({ searchValue }) => {
 
   const fetchSuggestedUsers = useCallback(async () => {
     try {
-      const res = await fetch('/api/v1/users/suggested');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/suggested`);
       const data = await res.json();
       if (res.ok && data.success) {
         setSuggestedUsers(data.data);
@@ -98,7 +98,7 @@ const Feed = ({ searchValue }) => {
 
   const handleFollowUser = async (targetUserId) => {
     try {
-      const res = await fetch(`/api/v1/users/follow/${targetUserId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/follow/${targetUserId}`, {
         method: 'POST',
       });
       const data = await res.json();

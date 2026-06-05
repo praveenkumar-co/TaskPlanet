@@ -50,7 +50,7 @@ const CreatePost = ({ onPostCreated }) => {
     }
 
     try {
-      const res = await fetch('/api/v1/posts', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts`, {
         method: 'POST',
         body: formData,
       });
