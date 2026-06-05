@@ -35,6 +35,12 @@ const Feed = ({ searchValue }) => {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts?${queryParams}`, {
         headers: { 'Content-Type': 'application/json' }
       });
+      
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server is waking up. Please retry in a few seconds.");
+      }
+
       const data = await res.json();
 
       if (!res.ok) {
@@ -64,9 +70,13 @@ const Feed = ({ searchValue }) => {
   const fetchSuggestedUsers = useCallback(async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/suggested`);
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setSuggestedUsers(data.data);
+      
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await res.json();
+        if (res.ok && data.success) {
+          setSuggestedUsers(data.data);
+        }
       }
     } catch (err) {
       console.error("Failed to fetch suggested users:", err);

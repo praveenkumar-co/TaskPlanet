@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://taskplanet-3n7g.onrender.com/api/:path*"
+    },
+    {
+      "source": "/temp/:path*",
+      "destination": "https://taskplanet-3n7g.onrender.com/temp/:path*"
+    }
+  ]
+}

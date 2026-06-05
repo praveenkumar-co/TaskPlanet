@@ -16,9 +16,13 @@ const ProfileModal = ({ isOpen, onClose }) => {
         try {
           // Fetch posts created by this specific user via ownerId parameter
           const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts?ownerId=${user._id}&limit=100`);
-          const data = await res.json();
-          if (res.ok && data.success) {
-            setUserPosts(data.data.posts);
+          
+          const contentType = res.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const data = await res.json();
+            if (res.ok && data.success) {
+              setUserPosts(data.data.posts);
+            }
           }
         } catch (err) {
           console.error("Failed to fetch user posts:", err);

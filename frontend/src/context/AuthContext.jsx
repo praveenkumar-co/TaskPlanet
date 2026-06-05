@@ -34,11 +34,17 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/current-user`, {
         headers: { 'Content-Type': 'application/json' }
       });
-      const data = await res.json();
       
-      if (res.ok && data.success) {
-        setUser(data.data);
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await res.json();
+        if (res.ok && data.success) {
+          setUser(data.data);
+        } else {
+          setUser(null);
+        }
       } else {
+        // Fallback for non-JSON responses (like Render waking up HTML)
         setUser(null);
       }
     } catch (err) {

@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import { errorHandler } from 'node-utils-kit';
 import userRouter from './routes/userRouter.js';
 import postRouter from './routes/postRouter.js';
 
@@ -30,6 +29,15 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 
 // Global Error Handler Middleware
-app.use(errorHandler);
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || err.status || 500;
+  const message = err.message || "Internal Server Error";
+  
+  return res.status(statusCode).json({
+    success: false,
+    message,
+    statusCode
+  });
+});
 
 export default app;
