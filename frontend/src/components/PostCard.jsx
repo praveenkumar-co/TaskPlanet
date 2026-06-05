@@ -35,7 +35,8 @@ const PostCard = ({ post }) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts/like/${post._id}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       });
       const data = await res.json();
 
@@ -59,6 +60,7 @@ const PostCard = ({ post }) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/follow/${post.owner?._id}`, {
         method: 'POST',
+        credentials: 'include'
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -94,7 +96,8 @@ const PostCard = ({ post }) => {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts/comment/${post._id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: text })
+        body: JSON.stringify({ content: text }),
+        credentials: 'include'
       });
       const data = await res.json();
 
