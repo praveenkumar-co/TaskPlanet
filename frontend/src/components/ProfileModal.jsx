@@ -15,7 +15,9 @@ const ProfileModal = ({ isOpen, onClose }) => {
         setLoading(true);
         try {
           // Fetch posts created by this specific user via ownerId parameter
-          const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts?ownerId=${user._id}&limit=100`);
+          const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts?ownerId=${user._id}&limit=100`, {
+            credentials: 'include'
+          });
           
           const contentType = res.headers.get("content-type");
           if (contentType && contentType.includes("application/json")) {
@@ -38,6 +40,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/follow/${targetUserId}`, {
         method: 'POST',
+        credentials: 'include'
       });
       const data = await res.json();
       if (res.ok && data.success) {

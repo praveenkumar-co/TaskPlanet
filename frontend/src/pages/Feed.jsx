@@ -33,7 +33,8 @@ const Feed = ({ searchValue }) => {
       });
 
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts?${queryParams}`, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       });
       
       const contentType = res.headers.get("content-type");
@@ -69,7 +70,9 @@ const Feed = ({ searchValue }) => {
 
   const fetchSuggestedUsers = useCallback(async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/suggested`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/suggested`, {
+        credentials: 'include'
+      });
       
       const contentType = res.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
@@ -110,6 +113,7 @@ const Feed = ({ searchValue }) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/follow/${targetUserId}`, {
         method: 'POST',
+        credentials: 'include'
       });
       const data = await res.json();
       if (res.ok && data.success) {

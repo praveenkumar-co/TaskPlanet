@@ -53,6 +53,7 @@ const CreatePost = ({ onPostCreated }) => {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/posts`, {
         method: 'POST',
         body: formData,
+        credentials: 'include'
       });
 
       const data = await res.json();

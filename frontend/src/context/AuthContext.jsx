@@ -32,7 +32,8 @@ export const AuthProvider = ({ children }) => {
     try {
       if (showLoadingScreen) setLoading(true);
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/current-user`, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       });
       
       const contentType = res.headers.get("content-type");
@@ -65,7 +66,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/register`, {
         method: 'POST',
-        body: formData // Form data handles content-type boundary
+        body: formData, // Form data handles content-type boundary
+        credentials: 'include'
       });
       const data = await res.json();
 
@@ -86,7 +88,8 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailOrUsername, password })
+        body: JSON.stringify({ emailOrUsername, password }),
+        credentials: 'include'
       });
       const data = await res.json();
 
@@ -108,7 +111,8 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/google-login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ credential })
+        body: JSON.stringify({ credential }),
+        credentials: 'include'
       });
       const data = await res.json();
 
@@ -128,7 +132,8 @@ export const AuthProvider = ({ children }) => {
     try {
       await fetch(`${import.meta.env.VITE_API_URL || ''}/api/v1/users/logout`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       });
     } catch (err) {
       console.error("Logout request error:", err);
